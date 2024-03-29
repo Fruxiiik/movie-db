@@ -1,13 +1,117 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+*, :after, :before {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.4em;
+    background: #FFF;
+    color: #111;
+    font-weight: 300;
+    padding-top: 36px; /* Add padding to the body to ensure space around the content */
+    margin: 0 36px;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.MovieItem {
+    display: flex;
+    /*width: calc(50% - 36px); !* Adjust width to account for gutter *!*/
+    height: 281px;
+    background: #fff;
+    /*box-shadow: 0 2px 8px rgba(0,0,0,0.1);*/
+    overflow: hidden;
+    margin-bottom: 36px; /* Space between rows */
+
+    /* @shadow-2 */
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+}
+
+.MoviePoster img {
+    width: 183px;
+    height: 281px;
+}
+
+.MovieDetails {
+    padding: 12px 20px 20px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-start;
+}
+
+.MovieDetails h2 {
+    /*margin-top: 10px; !* Top margin to push the title down *!*/
+    margin-bottom: 0; /* Optional: Adjust bottom margin if needed */
+    /* Additional styling for the title */
+}
+
+.ReleaseDate {
+    color: #827E7E;
+    /* @font-size-sm: 12px */
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 183.333% */
+    margin-top: 7px;
+}
+
+.Overview {
+    color: #000;
+
+    /* @font-size-sm: 12px */
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 183.333% */
+    margin-top: 10px;
+}
+
+.Title {
+    color: #000;
+
+    /* H5 - Header 5 */
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px; /* 140% */
+}
+
+.Genres {
+    display: inline-block; /* Change to inline-block for better control */
+    padding: 2px 5px; /* Add padding for genre tags */
+    margin-right: 5px; /* Space between genre tags */
+    border: 1px solid #D9D9D9;
+    border-radius: 2px;
+    background: #FAFAFA;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 12px;
+    margin-top: 9px;
+}
+
+.ErrorIndicator {
+    padding: 0 36px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .MovieItem {
+        width: calc(100% - 36px); /* Full width minus padding on smaller screens */
+    }
 }

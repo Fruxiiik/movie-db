@@ -1,0 +1,151 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "ignorePatterns": ["node_modules", "dist", "build"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/recommended",
+    "airbnb",
+    "plugin:react/jsx-runtime",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+
+  "parserOptions": {
+    "parser": "@babel/eslint-parser",
+    "requireOptions": {
+      "requireConfigFile": false,
+      "babelOptions": {
+        "babelrc": false,
+        "configFile": false,
+        "presets": [
+          "@babel/presets-env",
+          {
+            "useBuiltIns": "entry",
+            "corejs": "3.22"
+          }
+        ]
+      }
+    },
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "jsx-a11y", "import", "react-hooks", "prettier"],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "trailingComma": "es5",
+        "endOfLine": "lf",
+        "printWidth": 120,
+        "semi": false,
+        "bracketSpacing": true
+      }
+    ],
+    "no-plusplus": "off",
+//    "indent": ["error", 2],
+    "consistent-return": "off",
+    "no-underscore-dangle": "off",
+    "class-methods-use-this": "off",
+    "no-return-await": "off",
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "camelcase": "off", // delete
+    "no-unused-vars": 0,
+    "linebreak-style": [0, "unix"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "never"],
+    "react/destructuring-assignment": "off",
+    "react/no-array-index-key": "off",
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/static-property-placement": "off",
+    "react/prefer-exact-props": "off",
+    "react/prop-types": 0,
+    "jsx-a11y/no-autofocus": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "import/no-unresolved": [2, { "caseSensitive": false }],
+    "import/named": 0,
+    "import/namespace": 2,
+    "import/no-cycle": 0,
+    "import/no-extraneous-dependencies": 0,
+    "react/function-component-definition": "off",
+    "import/prefer-default-export": "off",
+    "import/default": 2,
+    "import/export": 0, // 2 ???????????
+    "import/order": [
+      2,
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always"
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    },
+    "jsx-a11y": {
+      "polymorphicPropName": "as",
+      "components": {
+        "CityInput": "input",
+        "CustomButton": "button",
+        "MyButton": "button",
+        "RoundButton": "button"
+      }
+    },
+    "react": {
+      "createClass": "createReactClass", // Regex for Component Factory to use,
+      // default to "createReactClass"
+      "pragma": "React", // Pragma to use, default to "React"
+      "fragment": "Fragment", // Fragment to use (may be a property of <pragma>), default to "Fragment"
+      "version": "detect", // React version. "detect" automatically picks the version you have installed.
+      // You can also use `16.0`, `16.3`, etc, if you want to override the detected value.
+      // It will default to "latest" and warn if missing, and to "detect" in the future
+      "flowVersion": "0.53" // Flow version
+    },
+    "propWrapperFunctions": [
+      // The names of any function used to wrap propTypes, e.g. `forbidExtraProps`. If this isn't set, any propTypes wrapped in a function will be skipped.
+      "forbidExtraProps",
+      { "property": "freeze", "object": "Object" },
+      { "property": "myFavoriteWrapper" },
+      // for rules that check exact prop wrappers
+      { "property": "forbidExtraProps", "exact": true }
+    ],
+    "componentWrapperFunctions": [
+      // The name of any function used to wrap components, e.g. Mobx `observer` function. If this isn't set, components wrapped by these functions will be skipped.
+      "observer", // `property`
+      { "property": "styled" }, // `object` is optional
+      { "property": "observer", "object": "Mobx" },
+      { "property": "observer", "object": "<pragma>" } // sets `object` to whatever value `settings.react.pragma` is set to
+    ],
+    "formComponents": [
+      // Components used as alternatives to <form> for forms, eg. <Form endpoint={ url } />
+      "CustomForm",
+      { "name": "SimpleForm", "formAttribute": "endpoint" },
+      { "name": "Form", "formAttribute": ["registerEndpoint", "loginEndpoint"] } // allows specifying multiple properties if necessary
+    ],
+    "linkComponents": [
+      // Components used as alternatives to <a> for linking, eg. <Link to={ url } />
+      "Hyperlink",
+      { "name": "MyLink", "linkAttribute": "to" },
+      { "name": "Link", "linkAttribute": ["to", "href"] } // allows specifying multiple properties if necessary
+    ]
+  }
+}

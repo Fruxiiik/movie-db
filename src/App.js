@@ -210,10 +210,6 @@ export class App extends Component {
       )
     }
 
-    if (errorType === 'fetchErrorRated' || errorType === 'noResultsRated') {
-      return <ErrorIndicator retry={this.handleRetry} errorMessage={errorMessage} type="warning" />
-    }
-
     if (activeTab === 'search') {
       return (
         <>
@@ -229,6 +225,9 @@ export class App extends Component {
 
     if (activeTab === 'rated') {
       const { ratedMovies } = this.state
+      if (errorType === 'fetchErrorRated' || errorType === 'noResultsRated') {
+        return <ErrorIndicator retry={this.handleRetry} errorMessage={errorMessage} type="warning" />
+      }
       return (
         <>
           <MovieList moviesData={ratedMovies} handleRatingChange={this.handleRatingChange} />

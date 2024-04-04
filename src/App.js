@@ -14,6 +14,7 @@ export class App extends Component {
       activeTab: 'search',
       inputValue: '',
       currentPage: 1,
+      currentRatedPage: 1,
       totalItems: 0,
       moviesData: [],
       ratedMovies: [],
@@ -61,10 +62,10 @@ export class App extends Component {
   }
 
   handleTabChange = (activeKey) => {
+    const { guestSessionId } = this.state
     this.setState({ activeTab: activeKey }, () => {
       if (activeKey === 'rated') {
-        const { guestSessionId } = this.state
-        this.getRatedMovies(guestSessionId, 1)
+        this.getRatedMovies(guestSessionId, this.state.currentRatedPage || 1)
       }
     })
   }
@@ -127,23 +128,22 @@ export class App extends Component {
   }
 
   handleRetry = () => {
-    const { inputValue, currentPage } = this.state
+    const { inputValue, currentPage, currentRatedPage, guestSessionId } = this.state
     if (this.state.errorType === 'fetchError') {
       this.fetchMovies(inputValue, currentPage)
     } else if (this.state.errorType === 'noResults') {
       this.debouncedSearch(inputValue, currentPage)
+    } else if (this.state.errorType === 'noResultsRated' || this.state.errorType === 'fetchErrorRated') {
+      this.getRatedMovies(guestSessionId, currentRatedPage)
     }
   }
 
   handleRatingChange = (movieId, ratingValue) => {
     const { guestSessionId } = this.state
-    let ratedMovies = {}
     this.movieApiClient
       .sendRatingValue(guestSessionId, movieId, ratingValue)
       .then(() => {
-        ratedMovies = JSON.parse(localStorage.getItem('ratedMovies') || '{}')
-        ratedMovies[movieId] = ratingValue
-        localStorage.setItem('ratedMovies', JSON.stringify(ratedMovies))
+        this.getRatedMovies(guestSessionId, 1)
       })
       .catch(console.error)
   }

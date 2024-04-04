@@ -1,6 +1,5 @@
-// В MovieList.js
 import React, { Component } from 'react'
-import { List, Card } from 'antd'
+import { List } from 'antd'
 
 import { MovieItem } from '../MovieItem'
 
@@ -9,11 +8,29 @@ import './MovieList.css'
 export class MovieList extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      columnCount: 2,
+    }
+  }
+
+  componentDidMount() {
+    this.updateColumnCount()
+    window.addEventListener('resize', this.updateColumnCount)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateColumnCount)
+  }
+
+  updateColumnCount = () => {
+    const columnCount = window.innerWidth < 600 ? 1 : 2
+    this.setState({ columnCount })
   }
 
   render() {
-    const { moviesData, children } = this.props
+    const { handleRatingChange, moviesData, children } = this.props
+    const { columnCount } = this.state
+
     if (!moviesData) {
       return <List>{children}</List>
     }
@@ -22,7 +39,7 @@ export class MovieList extends Component {
         className="MovieList"
         grid={{
           gutter: 36,
-          column: 2,
+          column: columnCount,
         }}
         dataSource={moviesData}
         renderItem={(item) => (
@@ -33,12 +50,12 @@ export class MovieList extends Component {
               releaseDate={item.releaseDate}
               rating={item.rating}
               posterPath={item.posterPath}
-              genres={item.genres.join(', ')}
+              genreIds={item.genreIds}
               overview={item.overview}
+              handleRatingChange={handleRatingChange}
             />
           </List.Item>
         )}
-        // style={{ padding: '0 36px' }}
       />
     )
   }

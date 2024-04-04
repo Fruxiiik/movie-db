@@ -60,6 +60,7 @@
     "class-methods-use-this": "off",
     "no-return-await": "off",
     "indent": ["error", 2, { "SwitchCase": 1 }],
+    "react/no-unused-state": "off", // delete
     "camelcase": "off", // delete
     "no-unused-vars": 0,
     "linebreak-style": [0, "unix"],

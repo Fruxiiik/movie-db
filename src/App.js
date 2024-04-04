@@ -103,16 +103,10 @@ export class App extends Component {
 
   handleChangePage = (page) => {
     const { activeTab, inputValue, guestSessionId } = this.state
-
-    // Общая логика для прокрутки страницы вверх.
     window.scrollTo(0, 0)
-
-    // Установка текущей страницы в зависимости от вкладки и загрузка данных.
     if (activeTab === 'search') {
-      // Если активная вкладка 'search', загружаем фильмы по поисковому запросу.
       this.setState({ currentPage: page }, () => this.fetchMovies(inputValue, page))
     } else if (activeTab === 'rated') {
-      // Если активная вкладка 'rated', загружаем оцененные фильмы.
       this.setState({ currentRatedPage: page }, () => this.getRatedMovies(guestSessionId, page))
     }
   }
@@ -155,15 +149,15 @@ export class App extends Component {
   }
 
   getRatedMovies = (guestSessionId, page) => {
-    this.setState({ loadingRated: true, errorMessage: '', errorType: null })
+    this.setState({ loadingRated: true, errorMessage: '', notificationType: null })
     this.movieApiClient
       .getRatedMovies(guestSessionId, page)
       .then(({ movies, totalResults }) => {
         if (movies.length === 0) {
           this.setState({
-            errorMessage: 'Фильмы по запросу не найдены.',
+            errorMessage: 'Оцененных фильмов нет',
             loadingRated: false,
-            errorType: 'noResults',
+            errorType: 'noResultsRated',
           })
         } else {
           this.setState({
@@ -177,9 +171,9 @@ export class App extends Component {
       })
       .catch((err) => {
         this.setState({
-          errorMessage: err.message || 'Произошла ошибка при загрузке данных.',
+          errorMessage: 'Произошла ошибка при загрузке данных. Возможно у вас еще нет оцененных фильмов',
           loadingRated: false,
-          errorType: 'fetchError',
+          errorType: 'fetchErrorRated',
         })
       })
   }
@@ -198,8 +192,6 @@ export class App extends Component {
       errorMessage,
       errorType,
     } = this.state
-    // console.log(ratedMovies)
-    // Вывод Spinner вместе с компонентом Search
     if (activeTab === 'search' && loading) {
       return (
         <>
@@ -218,7 +210,10 @@ export class App extends Component {
       )
     }
 
-    // Основной контент для вкладки поиска
+    if (errorType === 'fetchErrorRated' || errorType === 'noResultsRated') {
+      return <ErrorIndicator retry={this.handleRetry} errorMessage={errorMessage} type="warning" />
+    }
+
     if (activeTab === 'search') {
       return (
         <>
@@ -228,23 +223,18 @@ export class App extends Component {
         </>
       )
     }
-
-    // Контент для вкладки с оцененными фильмами
     if (activeTab === 'rated' && loadingRated) {
       return <Spinner />
     }
 
     if (activeTab === 'rated') {
       const { ratedMovies } = this.state
-      if (ratedMovies) {
-        return (
-          <>
-            <MovieList moviesData={ratedMovies} handleRatingChange={this.handleRatingChange} />
-            <Pagination current={currentRatedPage} onChangePage={this.handleChangePage} total={totalRatedItems} />
-          </>
-        )
-      }
-      return <ErrorIndicator retry={this.handleRetry} errorMessage="У вас пока нет оцененных фильмов" />
+      return (
+        <>
+          <MovieList moviesData={ratedMovies} handleRatingChange={this.handleRatingChange} />
+          <Pagination current={currentRatedPage} onChangePage={this.handleChangePage} total={totalRatedItems} />
+        </>
+      )
     }
   }
 

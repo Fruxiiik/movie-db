@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert, Button, Space } from 'antd'
 
-const ErrorIndicator = ({ errorMessage, retry }) => {
+const ErrorIndicator = ({ errorMessage, retry, type }) => {
   return (
     <div className="ErrorIndicator">
       <Space direction="vertical" style={{ width: '100%' }}>
@@ -9,23 +9,21 @@ const ErrorIndicator = ({ errorMessage, retry }) => {
           className="ErrorMessage"
           message={errorMessage}
           action={
-            // <Space>
             <Button onClick={retry} type="primary" size="middle">
               Повторить попытку
             </Button>
-            // </Space>
           }
           closable
-          // description={errorMessage}
-          type="error"
+          type={type}
           showIcon
         />
-        {/* <Button onClick={retry} type="primary"> */}
-        {/*  Повторить попытку */}
-        {/* </Button> */}
       </Space>
     </div>
   )
+}
+
+ErrorIndicator.defaultProps = {
+  type: 'error',
 }
 
 export default ErrorIndicator

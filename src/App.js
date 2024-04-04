@@ -236,12 +236,15 @@ export class App extends Component {
 
     if (activeTab === 'rated') {
       const { ratedMovies } = this.state
-      return (
-        <>
-          <MovieList moviesData={ratedMovies} handleRatingChange={this.handleRatingChange} />
-          <Pagination current={currentRatedPage} onChangePage={this.handleChangePage} total={totalRatedItems} />
-        </>
-      )
+      if (ratedMovies) {
+        return (
+          <>
+            <MovieList moviesData={ratedMovies} handleRatingChange={this.handleRatingChange} />
+            <Pagination current={currentRatedPage} onChangePage={this.handleChangePage} total={totalRatedItems} />
+          </>
+        )
+      }
+      return <ErrorIndicator retry={this.handleRetry} errorMessage="У вас пока нет оцененных фильмов" />
     }
   }
 

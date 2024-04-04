@@ -143,6 +143,9 @@ export class App extends Component {
     this.movieApiClient
       .sendRatingValue(guestSessionId, movieId, ratingValue)
       .then(() => {
+        const ratedMovies = JSON.parse(localStorage.getItem('ratedMovies') || '{}')
+        ratedMovies[movieId] = ratingValue
+        localStorage.setItem('ratedMovies', JSON.stringify(ratedMovies))
         this.getRatedMovies(guestSessionId, 1)
       })
       .catch(console.error)

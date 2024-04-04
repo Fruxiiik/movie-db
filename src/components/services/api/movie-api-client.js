@@ -77,9 +77,6 @@ export default class MovieApiClient {
     const apiKey = '7798b805b66bccb5ce97326b1de3b1a2'
     const url = `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=${apiKey}&language=en-US&page=${page}`
     const response = await fetch(url)
-    if (!response.ok) {
-      throw new Error(`Ошибка: ${response.statusText}`)
-    }
     const data = await response.json()
     const movies = data.results.map((movie) => ({
       id: movie.id,

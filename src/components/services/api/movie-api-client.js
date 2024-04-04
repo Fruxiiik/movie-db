@@ -2,25 +2,21 @@ export default class MovieApiClient {
   _apiBase = 'https://api.themoviedb.org'
 
   async guestSession() {
-    try {
-      const apiKey =
-        'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3Nzk4YjgwNWI2NmJjY2I1Y2U5NzMyNmIxZGUzYjFhMiIsInN1YiI6IjY1ZmIwZDgxYmYzMWYyMDE3ZWZkY2I2ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LVfwxMVRTW53I6hXx6qWvUqwHwOp2_ps86CvoYbCK4w'
-      const apiUrl = `${this._apiBase}${'/3/authentication/guest_session/new'}`
-      const res = await fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          Accept: 'application/json',
-        },
-      })
-      if (!res.ok) {
-        throw new Error(`Could not fetch ${apiUrl}, received ${res.status}`)
-      }
-      const body = await res.json()
-      return body
-    } catch (error) {
-      throw error
+    const apiKey =
+      'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3Nzk4YjgwNWI2NmJjY2I1Y2U5NzMyNmIxZGUzYjFhMiIsInN1YiI6IjY1ZmIwZDgxYmYzMWYyMDE3ZWZkY2I2ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LVfwxMVRTW53I6hXx6qWvUqwHwOp2_ps86CvoYbCK4w'
+    const apiUrl = `${this._apiBase}${'/3/authentication/guest_session/new'}`
+    const res = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        Accept: 'application/json',
+      },
+    })
+    if (!res.ok) {
+      throw new Error(`Could not fetch ${apiUrl}, received ${res.status}`)
     }
+    const body = await res.json()
+    return body
   }
 
   async getResource(url) {
